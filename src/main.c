@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2023
-** ee
+** lemin
 ** File description:
-** ee
+** main
 */
 
 #include "lemin.h"

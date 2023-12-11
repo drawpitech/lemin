@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** minishell
+** lemin
 ** File description:
 ** my_nbr_len
 */

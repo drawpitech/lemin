@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2023
-** ee
+** lemin
 ** File description:
-** ee
+** lemin
 */
 
 #ifndef LEMIN_H_
