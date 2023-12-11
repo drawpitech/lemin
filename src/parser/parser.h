@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2023
-** eee
+** lemin
 ** File description:
-** ee
+** parser
 */
 
 #ifndef PARSER_H_
