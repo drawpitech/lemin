@@ -62,6 +62,6 @@ int get_room(char *line, anthill_t *anthill)
     resize_anthill(&anthill->rooms);
     anthill->rooms.rooms[anthill->rooms.count] = *room;
     anthill->rooms.count += 1;
-    DEBUG("ROOM: `%s`, x: %d, y: %d", room->name, room->x, room->y);
+    my_printf("%s %d %d\n", room->name, room->x, room->y);
     return RET_VALID;
 }

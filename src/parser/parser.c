@@ -24,12 +24,12 @@ int get_command(char *line, anthill_t *anthill)
     if (line[1] != '#')
         return RET_VALID;
     if (my_strcmp(line, "##start") == 0) {
-        DEBUG_MSG("ENTRANCE");
+        my_putstr("##start\n");
         anthill->step = ST_ROOM_ENTRANCE;
         return RET_VALID;
     }
     if (my_strcmp(line, "##end") == 0) {
-        DEBUG_MSG("EXIT");
+        my_putstr("##end\n");
         anthill->step = ST_ROOM_EXIT;
         return RET_VALID;
     }
@@ -41,11 +41,12 @@ int get_ants_num(char *line, anthill_t *anthill)
 {
     long value = str_to_int(line);
 
+    my_putstr("#number_of_ants\n");
     if (value == INT64_MAX)
         return RET_ERROR;
     anthill->ants = value;
     anthill->step = ST_ROOMS;
-    DEBUG("%d ants.", value);
+    my_printf("%d\n#rooms\n", value);
     return RET_VALID;
 }
 
