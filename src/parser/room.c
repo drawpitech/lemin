@@ -32,25 +32,36 @@ void resize_anthill(anthill_rooms_t *rooms)
     rooms->allocated = new_size;
 }
 
-int get_room(char *line, anthill_t *anthill)
+static
+room_t *get_room_data(char *line)
 {
+    static room_t room;
     char *dup = my_strdup(line);
     char *ptr_x = my_strfind(dup, ' ');
     char *ptr_y = (ptr_x == NULL) ? NULL : my_strfind(ptr_x + 1, ' ');
-    room_t *room = NULL;
 
     if (ptr_x == NULL || ptr_y == NULL || dup == NULL)
-        return RET_ERROR;
-    resize_anthill(&anthill->rooms);
-    room = anthill->rooms.rooms + anthill->rooms.count;
-    anthill->rooms.count += 1;
-    room->name = dup;
+        return NULL;
     *ptr_x = '\0';
     *ptr_y = '\0';
-    room->x = str_to_int(ptr_x + 1);
-    room->y = str_to_int(ptr_y + 1);
-    DEBUG("ROOM: `%s`, x: %d, y: %d", room->name, room->x, room->y);
-    if (room->x == INT64_MAX || room->y == INT64_MAX)
+    room.name = dup;
+    room.x = str_to_int(ptr_x + 1);
+    room.y = str_to_int(ptr_y + 1);
+    if (room.x == INT64_MAX || room.y == INT64_MAX)
+        return NULL;
+    return &room;
+}
+
+int get_room(char *line, anthill_t *anthill)
+{
+    room_t *room = NULL;
+
+    room = get_room_data(line);
+    if (room == NULL)
         return RET_ERROR;
+    resize_anthill(&anthill->rooms);
+    anthill->rooms.rooms[anthill->rooms.count] = *room;
+    anthill->rooms.count += 1;
+    DEBUG("ROOM: `%s`, x: %d, y: %d", room->name, room->x, room->y);
     return RET_VALID;
 }
