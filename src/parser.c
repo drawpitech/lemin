@@ -22,17 +22,17 @@ int get_command(char *line, anthill_t *anthill)
 {
     if (line[1] != '#')
         return RET_VALID;
-    if (my_strcmp(line, "##start")) {
+    if (my_strcmp(line, "##start") == 0) {
         DEBUG_MSG("ENTRANCE");
         anthill->step = ST_ROOM_ENTRANCE;
         return RET_VALID;
     }
-    if (my_strcmp(line, "##end")) {
+    if (my_strcmp(line, "##end") == 0) {
         DEBUG_MSG("EXIT");
         anthill->step = ST_ROOM_EXIT;
         return RET_VALID;
     }
-    return RET_ERROR;
+    return RET_VALID;
 }
 
 static
