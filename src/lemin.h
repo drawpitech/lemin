@@ -30,7 +30,7 @@ typedef struct {
     size_t allocated;
 } anthill_rooms_t;
 
-typedef struct {
+typedef struct anthill_s {
     size_t ants;
     char step;
     anthill_rooms_t rooms;
