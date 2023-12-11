@@ -6,23 +6,49 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
-#include "my/io.h"
+#include "my/debug.h"
+#include "my/std.h"
+#include "my/string.h"
 
 #include "lemin.h"
+
+static
+void sanitize(char *line)
+{
+    char *tmp = my_strfind(line, '\n');
+
+    if (tmp == NULL)
+        return;
+    *tmp = '\0';
+}
+
+static
+void free_ants(anthill_t *anthill)
+{
+    if (anthill->rooms.rooms != NULL) {
+        for (size_t i = 0; i < anthill->rooms.count; i++)
+            free(anthill->rooms.rooms[i].name);
+        free(anthill->rooms.rooms);
+    }
+}
 
 int lemin(void)
 {
     size_t size = 0;
     char *buffer = NULL;
+    anthill_t anthill = { 0 };
+    int ret = RET_VALID;
 
     while (getline(&buffer, &size, stdin) != -1) {
-        buffer[size] = '\0';
-        my_printf("%s", buffer);
+        sanitize(buffer);
+        DEBUG("-> [%s]", buffer);
+        ret = process_line(buffer, &anthill);
+        if (ret == RET_ERROR)
+            break;
     }
     if (buffer != NULL)
         free(buffer);
-    return EXIT_SUCCESS;
+    free_ants(&anthill);
+    return RET_VALID;
 }
