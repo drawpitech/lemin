@@ -50,5 +50,5 @@ int lemin(void)
     if (buffer != NULL)
         free(buffer);
     free_ants(&anthill);
-    return RET_VALID;
+    return ret;
 }
