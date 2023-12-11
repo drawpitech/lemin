@@ -17,26 +17,25 @@ int index_in(char c, char const *base)
 }
 
 static
-int is_valid(char c, int has_started, int *is_neg, const char *base)
+bool is_valid(char c, bool has_started, bool *is_neg, const char *base)
 {
     if (index_in(c, base) != -1)
-        return 1;
+        return true;
     if (c == '+')
         return !(has_started);
     if (c == '-') {
         if (has_started)
-            return 0;
+            return false;
         *is_neg = !*is_neg;
-        return 1;
+        return true;
     }
     if (has_started)
-        return 0;
-    *is_neg = 0;
-    return 1;
+        return false;
+    return false;
 }
 
 static
-int true_val(int res, int is_neg)
+int64_t true_val(int64_t res, bool is_neg)
 {
     if (is_neg)
         return res;
@@ -46,29 +45,32 @@ int true_val(int res, int is_neg)
     return res;
 }
 
-int str_to_int_base(char const *str, char const *base)
+int64_t str_to_int_base(char const *str, char const *base)
 {
-    int res = 0;
-    int is_neg = 0;
-    int has_started = 0;
+    int64_t res = 0;
+    bool is_neg = false;
+    bool has_started = false;
     int len = (int)my_strlen(base);
 
     if (str == NULL || base == 0)
-        return 0;
+        return INT64_MAX;
     for (int i = 0; str[i]; i++) {
-        if (is_valid(str[i], has_started, &is_neg, base) == 0)
-            return true_val(res, is_neg);
+        if (!is_valid(str[i], has_started, &is_neg, base))
+            return (index_in(str[i], base) == -1)
+                ? INT64_MAX
+                : true_val(res, is_neg);
         if (index_in(str[i], base) == -1)
             continue;
-        has_started = 1;
+        has_started = true;
         res = res * len + -index_in(str[i], base);
         if (res > 0)
-            return 0;
+            return INT64_MAX;
     }
     return true_val(res, is_neg);
 }
 
-int str_to_int(char const *str)
+int64_t str_to_int(char const *str)
 {
     return str_to_int_base(str, BASE_DEC);
 }
+
