@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2023
-** eee
+** lemin
 ** File description:
-** eee
+** parser
 */
 
 #include <stdint.h>
