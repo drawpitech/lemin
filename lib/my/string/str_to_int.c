@@ -73,4 +73,3 @@ int64_t str_to_int(char const *str)
 {
     return str_to_int_base(str, BASE_DEC);
 }
-
