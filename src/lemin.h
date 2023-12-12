@@ -30,10 +30,22 @@ typedef struct {
     size_t allocated;
 } anthill_rooms_t;
 
+typedef struct {
+    char *from;
+    char *to;
+} tunnel_t;
+
+typedef struct {
+    tunnel_t *tunnels;
+    size_t count;
+    size_t allocated;
+} anthill_tunnels_t;
+
 typedef struct anthill_s {
     size_t ants;
     char step;
     anthill_rooms_t rooms;
+    anthill_tunnels_t tunnels;
 } anthill_t;
 
 int lemin(void);

@@ -50,6 +50,37 @@ int get_ants_num(char *line, anthill_t *anthill)
     return RET_VALID;
 }
 
+static
+void resize_anthill(anthill_tunnels_t *tunnels)
+{
+    size_t new_size;
+
+    if (tunnels->allocated > tunnels->count + 1)
+        return;
+    new_size = (tunnels->allocated) ? tunnels->allocated * 2 : 16;
+    tunnels->tunnels = my_reallocarray(
+        tunnels->tunnels, new_size,
+        tunnels->allocated, sizeof(*tunnels->tunnels)
+    );
+    tunnels->allocated = new_size;
+}
+
+static
+int get_tunnel(char *line, anthill_t *anthill)
+{
+    char *dup = my_strdup(line);
+    char *ptr = my_strfind(dup, '-');
+
+    resize_anthill(&anthill->tunnels);
+    anthill->tunnels.tunnels[anthill->tunnels.count] = (tunnel_t){
+        .from = dup,
+        .to = ptr + 1,
+    };
+    *ptr = '\0';
+    anthill->tunnels.count += 1;
+    return RET_VALID;
+}
+
 int process_line(char *line, anthill_t *anthill)
 {
     if (line[0] == '#')
@@ -58,5 +89,5 @@ int process_line(char *line, anthill_t *anthill)
         return get_ants_num(line, anthill);
     if (my_strfind(line, '-') == NULL)
         return get_room(line, anthill);
-    return RET_VALID;
+    return get_tunnel(line, anthill);
 }

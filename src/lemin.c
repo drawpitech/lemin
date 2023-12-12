@@ -31,6 +31,11 @@ void free_ants(anthill_t *anthill)
             free(anthill->rooms.rooms[i].name);
         free(anthill->rooms.rooms);
     }
+    if (anthill->tunnels.tunnels != NULL) {
+        for (size_t i = 0; i < anthill->tunnels.count; i++)
+            free(anthill->tunnels.tunnels[i].from);
+        free(anthill->tunnels.tunnels);
+    }
 }
 
 int lemin(void)
