@@ -7,7 +7,7 @@
 
 #include "string.h"
 
-char *my_strfind(char *str, char c)
+char *my_strchr(char *str, char c)
 {
     if (str == NULL)
         return NULL;
@@ -25,7 +25,7 @@ char *my_strpbrk(char *str, char const *chars)
     if (str == NULL || chars == NULL)
         return NULL;
     for (size_t i = 0; chars[i]; i++) {
-        tmp = my_strfind(str, chars[i]);
+        tmp = my_strchr(str, chars[i]);
         if (ptr == NULL || tmp < ptr)
             ptr = tmp;
     }

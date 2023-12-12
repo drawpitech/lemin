@@ -37,8 +37,8 @@ room_t *get_room_data(char *line)
 {
     static room_t room;
     char *dup = my_strdup(line);
-    char *ptr_x = my_strfind(dup, ' ');
-    char *ptr_y = (ptr_x == NULL) ? NULL : my_strfind(ptr_x + 1, ' ');
+    char *ptr_x = my_strchr(dup, ' ');
+    char *ptr_y = (ptr_x == NULL) ? NULL : my_strchr(ptr_x + 1, ' ');
 
     if (ptr_x == NULL || ptr_y == NULL || dup == NULL)
         return NULL;

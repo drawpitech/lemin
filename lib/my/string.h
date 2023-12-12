@@ -46,7 +46,7 @@ char *my_strcapitalize(char *str);
 char *my_strcat(char *dest, char const *src);
 char *my_strcpy(char *dest, char const *src);
 char *my_strdup(char const *src);
-char *my_strfind(char *str, char c);
+char *my_strchr(char *str, char c);
 char *my_strlowcase(char *str);
 char *my_strncat(char *dest, char const *src, size_t nb);
 char *my_strncpy(char *dest, char const *src, size_t n);

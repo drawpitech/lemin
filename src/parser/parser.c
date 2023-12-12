@@ -67,7 +67,7 @@ static
 int get_tunnel(char *line, anthill_t *anthill)
 {
     char *dup = my_strdup(line);
-    char *ptr = my_strfind(dup, '-');
+    char *ptr = my_strchr(dup, '-');
 
     resize_anthill(&anthill->tunnels);
     anthill->tunnels.tunnels[anthill->tunnels.count] = (tunnel_t){
@@ -86,7 +86,7 @@ int process_line(char *line, anthill_t *anthill)
         return get_command(line, anthill);
     if (anthill->step == ST_ANTS_NUM)
         return get_ants_num(line, anthill);
-    if (my_strfind(line, '-') == NULL)
+    if (my_strchr(line, '-') == NULL)
         return get_room(line, anthill);
     return get_tunnel(line, anthill);
 }
@@ -94,7 +94,7 @@ int process_line(char *line, anthill_t *anthill)
 static
 void sanitize(char *line)
 {
-    char *tmp = my_strfind(line, '\n');
+    char *tmp = my_strchr(line, '\n');
 
     if (tmp == NULL)
         return;
