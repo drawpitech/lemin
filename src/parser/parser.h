@@ -8,7 +8,7 @@
 #ifndef PARSER_H_
     #define PARSER_H_
 
-typedef struct anthill_s anthill_t;
+    #include "lemin.h"
 
 int get_room(char *line, anthill_t *anthill);
 

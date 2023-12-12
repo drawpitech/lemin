@@ -14,16 +14,6 @@
 #include "lemin.h"
 
 static
-void sanitize(char *line)
-{
-    char *tmp = my_strfind(line, '\n');
-
-    if (tmp == NULL)
-        return;
-    *tmp = '\0';
-}
-
-static
 void free_ants(anthill_t *anthill)
 {
     if (anthill->rooms.rooms != NULL) {
@@ -38,22 +28,35 @@ void free_ants(anthill_t *anthill)
     }
 }
 
+static
+void print_anthill(anthill_t *anthill)
+{
+    room_t *room;
+    tunnel_t *tunnel;
+
+    my_printf("#number_of_ants\n%d\n", anthill->ants);
+    if (anthill->rooms.rooms != NULL) {
+        my_printf("#rooms\n");
+        for (size_t i = 0; i < anthill->rooms.count; i++) {
+            room = anthill->rooms.rooms + i;
+            my_printf("%s %d %d\n", room->name, room->x, room->y);
+        }
+    }
+    if (anthill->tunnels.tunnels != NULL) {
+        my_printf("#tunnels\n");
+        for (size_t i = 0; i < anthill->tunnels.count; i++) {
+            tunnel = anthill->tunnels.tunnels + i;
+            my_printf("%s-%s\n", tunnel->from, tunnel->to);
+        }
+    }
+}
+
 int lemin(void)
 {
-    size_t size = 0;
-    char *buffer = NULL;
     anthill_t anthill = { 0 };
-    int ret = RET_VALID;
 
-    while (getline(&buffer, &size, stdin) != -1) {
-        sanitize(buffer);
-        DEBUG("-> [%s]", buffer);
-        ret = process_line(buffer, &anthill);
-        if (ret == RET_ERROR)
-            break;
-    }
-    if (buffer != NULL)
-        free(buffer);
+    parse_me_baby(&anthill);
+    print_anthill(&anthill);
     free_ants(&anthill);
-    return ret;
+    return RET_VALID;
 }

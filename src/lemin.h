@@ -49,6 +49,6 @@ typedef struct anthill_s {
 } anthill_t;
 
 int lemin(void);
-int process_line(char *line, anthill_t *anthill);
+void parse_me_baby(anthill_t *anthill);
 
 #endif

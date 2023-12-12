@@ -15,7 +15,6 @@
 #include "my/std.h"
 #include "my/string.h"
 
-#include "lemin.h"
 #include "parser.h"
 
 static
@@ -24,12 +23,12 @@ int get_command(char *line, anthill_t *anthill)
     if (line[1] != '#')
         return RET_VALID;
     if (my_strcmp(line, "##start") == 0) {
-        my_putstr("##start\n");
+        DEBUG_MSG("ENTRANCE ROOM");
         anthill->step = ST_ROOM_ENTRANCE;
         return RET_VALID;
     }
     if (my_strcmp(line, "##end") == 0) {
-        my_putstr("##end\n");
+        DEBUG_MSG("EXIT ROOM");
         anthill->step = ST_ROOM_EXIT;
         return RET_VALID;
     }
@@ -41,12 +40,11 @@ int get_ants_num(char *line, anthill_t *anthill)
 {
     long value = str_to_int(line);
 
-    my_putstr("#number_of_ants\n");
     if (value == INT64_MAX)
         return RET_ERROR;
     anthill->ants = value;
     anthill->step = ST_ROOMS;
-    my_printf("%d\n#rooms\n", value);
+    DEBUG("%d ants.", value);
     return RET_VALID;
 }
 
@@ -81,6 +79,7 @@ int get_tunnel(char *line, anthill_t *anthill)
     return RET_VALID;
 }
 
+static
 int process_line(char *line, anthill_t *anthill)
 {
     if (line[0] == '#')
@@ -90,4 +89,29 @@ int process_line(char *line, anthill_t *anthill)
     if (my_strfind(line, '-') == NULL)
         return get_room(line, anthill);
     return get_tunnel(line, anthill);
+}
+
+static
+void sanitize(char *line)
+{
+    char *tmp = my_strfind(line, '\n');
+
+    if (tmp == NULL)
+        return;
+    *tmp = '\0';
+}
+
+void parse_me_baby(anthill_t *anthill)
+{
+    size_t size = 0;
+    char *buffer = NULL;
+
+    while (getline(&buffer, &size, stdin) != -1) {
+        sanitize(buffer);
+        DEBUG("-> [%s]", buffer);
+        if (process_line(buffer, anthill) == RET_ERROR)
+            break;
+    }
+    if (buffer != NULL)
+        free(buffer);
 }
