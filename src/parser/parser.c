@@ -109,7 +109,7 @@ void parse_me_baby(anthill_t *anthill)
     while (getline(&buffer, &size, stdin) != -1) {
         sanitize(buffer);
         DEBUG("-> [%s]", buffer);
-        if (process_line(buffer, anthill) == RET_ERROR)
+        if (buffer[0] == '\0' || process_line(buffer, anthill) == RET_ERROR)
             break;
     }
     if (buffer != NULL)
