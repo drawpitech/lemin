@@ -29,18 +29,25 @@ void free_ants(anthill_t *anthill)
 }
 
 static
+void print_room(room_t const *room)
+{
+    if (room->type == ROOM_ENTRANCE)
+        my_printf("##start\n");
+    if (room->type == ROOM_EXIT)
+        my_printf("##end\n");
+    my_printf("%s %d %d\n", room->name, room->x, room->y);
+}
+
+static
 void print_anthill(anthill_t *anthill)
 {
-    room_t *room;
     tunnel_t *tunnel;
 
     my_printf("#number_of_ants\n%d\n", anthill->ants);
     if (anthill->rooms.rooms != NULL) {
         my_printf("#rooms\n");
-        for (size_t i = 0; i < anthill->rooms.count; i++) {
-            room = anthill->rooms.rooms + i;
-            my_printf("%s %d %d\n", room->name, room->x, room->y);
-        }
+        for (size_t i = 0; i < anthill->rooms.count; i++)
+            print_room(anthill->rooms.rooms + i);
     }
     if (anthill->tunnels.tunnels != NULL) {
         my_printf("#tunnels\n");

@@ -8,6 +8,7 @@
 #ifndef LEMIN_H_
     #define LEMIN_H_
 
+    #include <stdbool.h>
     #include <stddef.h>
 
 enum steps_e {
@@ -18,16 +19,25 @@ enum steps_e {
     ST_TUNNELS,
 };
 
+enum room_type_e {
+    ROOM_NORMAL,
+    ROOM_ENTRANCE,
+    ROOM_EXIT,
+};
+
 typedef struct {
     char *name;
     size_t x;
     size_t y;
+    enum room_type_e type;
 } room_t;
 
 typedef struct {
     room_t *rooms;
     size_t count;
     size_t allocated;
+    bool has_entrance;
+    bool has_exit;
 } anthill_rooms_t;
 
 typedef struct {

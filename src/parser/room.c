@@ -47,9 +47,30 @@ room_t *get_room_data(char *line)
     room.name = dup;
     room.x = str_to_int(ptr_x + 1);
     room.y = str_to_int(ptr_y + 1);
+    room.type = ROOM_NORMAL;
     if (room.x == INT64_MAX || room.y == INT64_MAX)
         return NULL;
     return &room;
+}
+
+static
+int set_room_type(anthill_t *anthill, room_t *room)
+{
+    if (anthill->step == ST_ROOM_ENTRANCE) {
+        room->type = ROOM_ENTRANCE;
+        if (anthill->rooms.has_entrance)
+            return RET_ERROR;
+        anthill->rooms.has_entrance = true;
+        return RET_VALID;
+    }
+    if (anthill->step == ST_ROOM_EXIT) {
+        room->type = ROOM_EXIT;
+        if (anthill->rooms.has_exit)
+            return RET_ERROR;
+        anthill->rooms.has_exit = true;
+        return RET_VALID;
+    }
+    return RET_VALID;
 }
 
 int get_room(char *line, anthill_t *anthill)
@@ -61,7 +82,11 @@ int get_room(char *line, anthill_t *anthill)
         return RET_ERROR;
     resize_anthill(&anthill->rooms);
     anthill->rooms.rooms[anthill->rooms.count] = *room;
+    room = anthill->rooms.rooms + anthill->rooms.count;
     anthill->rooms.count += 1;
+    if (set_room_type(anthill, room) == RET_ERROR)
+        return RET_ERROR;
+    anthill->step = ST_ROOMS;
     DEBUG("%s %d %d", room->name, room->x, room->y);
     return RET_VALID;
 }
