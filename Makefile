@@ -116,6 +116,7 @@ $(BUILD_DIR)/asan/%.o: %.c $(LIBMY)
 	@ $(CC) -o $@ -c $< $(CFLAGS) $(DEPS_FLAGS) || $(DIE)
 
 $(ASAN_NAME): CFLAGS += -fsanitize=address,leak,undefined -g3
+$(ASAN_NAME): CFLAGS += -fanalyzer
 $(ASAN_NAME): CFLAGS += -D DEBUG_MODE
 $(ASAN_NAME): $(LIBMY) $(ASAN_OBJ)
 	@ $(ECHO) "[${C_BOLD}${C_YELLOW}CC${C_RESET}] ${C_GREEN}$@${C_RESET}"
