@@ -58,13 +58,19 @@ void print_anthill(anthill_t *anthill)
     }
 }
 
+static
+void handle_anthill(anthill_t *anthill)
+{
+    parse_me_baby(anthill);
+    print_anthill(anthill);
+    create_linked_list(anthill);
+}
+
 int lemin(void)
 {
     anthill_t anthill = { 0 };
 
-    parse_me_baby(&anthill);
-    print_anthill(&anthill);
-    create_linked_list(&anthill);
+    handle_anthill(&anthill);
     free_ants(&anthill);
     return RET_VALID;
 }
