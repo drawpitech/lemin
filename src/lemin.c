@@ -55,6 +55,7 @@ void handle_anthill(anthill_t *anthill)
     if (graph == NULL)
         return;
     DEBUG("HEAD: %s", graph->name);
+    move_ants(graph, anthill);
 }
 
 int lemin(void)
