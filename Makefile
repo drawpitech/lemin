@@ -29,6 +29,7 @@ LDFLAGS := -L./$(dir $(LIBMY)) -lmy
 # Source files
 VPATH := src
 SRC := lemin.c
+SRC += linked.c
 SRC += parser/parser.c
 SRC += parser/room.c
 

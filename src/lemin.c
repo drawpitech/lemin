@@ -64,6 +64,7 @@ int lemin(void)
 
     parse_me_baby(&anthill);
     print_anthill(&anthill);
+    create_linked_list(&anthill);
     free_ants(&anthill);
     return RET_VALID;
 }

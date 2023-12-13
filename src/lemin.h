@@ -25,11 +25,15 @@ enum room_type_e {
     ROOM_EXIT,
 };
 
-typedef struct {
+typedef struct room_s {
     char *name;
     size_t x;
     size_t y;
     enum room_type_e type;
+    struct {
+        size_t n;
+        struct room_s **arr;
+    } leaves;
 } room_t;
 
 typedef struct {
@@ -60,5 +64,6 @@ typedef struct anthill_s {
 
 int lemin(void);
 void parse_me_baby(anthill_t *anthill);
+void create_linked_list(anthill_t *anthill);
 
 #endif
