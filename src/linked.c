@@ -5,6 +5,7 @@
 ** linked
 */
 
+#include "my/debug.h"
 #include "my/std.h"
 
 #include "lemin.h"
@@ -46,4 +47,12 @@ void create_linked_list(anthill_t *anthill)
         return;
     for (size_t i = 0; i < anthill->tunnels.count; i++)
         add_tunnel(anthill, anthill->tunnels.tunnels + i);
+}
+
+room_t *get_graph(anthill_t *anthill)
+{
+    for (size_t i = 0; i < anthill->rooms.count; i++)
+        if (anthill->rooms.rooms[i].type == ROOM_ENTRANCE)
+            return anthill->rooms.rooms + i;
+    return NULL;
 }

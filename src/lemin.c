@@ -46,9 +46,15 @@ void print_anthill(anthill_t *anthill)
 static
 void handle_anthill(anthill_t *anthill)
 {
+    room_t *graph;
+
     parse_me_baby(anthill);
     print_anthill(anthill);
     create_linked_list(anthill);
+    graph = get_graph(anthill);
+    if (graph == NULL)
+        return;
+    DEBUG("HEAD: %s", graph->name);
 }
 
 int lemin(void)

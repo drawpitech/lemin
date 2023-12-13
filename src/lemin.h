@@ -65,5 +65,7 @@ typedef struct anthill_s {
 int lemin(void);
 void parse_me_baby(anthill_t *anthill);
 void create_linked_list(anthill_t *anthill);
+void free_ants(anthill_t *anthill);
+room_t *get_graph(anthill_t *anthill);
 
 #endif
