@@ -24,23 +24,25 @@ void add_tunnel(anthill_t *anthill, tunnel_t *tunnel)
 {
     room_t *from = find_room(anthill, tunnel->from);
     room_t *to = find_room(anthill, tunnel->to);
-    size_t new_size = (from->leaves.n) ? from->leaves.n + 1 : 2;
+    room_t **tmp;
 
     if (from == NULL || to == NULL)
         return;
-    my_reallocarray(
-        from->leaves.arr, new_size,
+    tmp = my_reallocarray(
+        from->leaves.arr, from->leaves.n + 1,
         from->leaves.n, sizeof(room_t *)
     );
+    if (tmp == NULL)
+        return;
+    from->leaves.arr = tmp;
     from->leaves.arr[from->leaves.n] = to;
-    from->leaves.arr[from->leaves.n + 1] = NULL;
-    from->leaves.n = new_size;
+    from->leaves.n += 1;
 }
 
 void create_linked_list(anthill_t *anthill)
 {
     if (anthill == NULL || anthill->rooms.rooms == NULL
-        || anthill->tunnels.tunnels == NULL || anthill->ants != 0)
+        || anthill->tunnels.tunnels == NULL || anthill->ants == 0)
         return;
     for (size_t i = 0; i < anthill->tunnels.count; i++)
         add_tunnel(anthill, anthill->tunnels.tunnels + i);
