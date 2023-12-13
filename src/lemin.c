@@ -14,21 +14,6 @@
 #include "lemin.h"
 
 static
-void free_ants(anthill_t *anthill)
-{
-    if (anthill->rooms.rooms != NULL) {
-        for (size_t i = 0; i < anthill->rooms.count; i++)
-            free(anthill->rooms.rooms[i].name);
-        free(anthill->rooms.rooms);
-    }
-    if (anthill->tunnels.tunnels != NULL) {
-        for (size_t i = 0; i < anthill->tunnels.count; i++)
-            free(anthill->tunnels.tunnels[i].from);
-        free(anthill->tunnels.tunnels);
-    }
-}
-
-static
 void print_room(room_t const *room)
 {
     if (room->type == ROOM_ENTRANCE)
