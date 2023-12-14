@@ -30,6 +30,7 @@ typedef struct room_s {
     size_t x;
     size_t y;
     enum room_type_e type;
+    bool visited;
     struct {
         size_t n;
         struct room_s **arr;
