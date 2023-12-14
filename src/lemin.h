@@ -30,6 +30,7 @@ typedef struct room_s {
     size_t x;
     size_t y;
     enum room_type_e type;
+    bool visited;
     struct {
         size_t n;
         struct room_s **arr;
@@ -67,5 +68,6 @@ void parse_me_baby(anthill_t *anthill);
 void create_linked_list(anthill_t *anthill);
 void free_ants(anthill_t *anthill);
 room_t *get_graph(anthill_t *anthill);
+void move_ants(room_t *graph, anthill_t *anthill);
 
 #endif

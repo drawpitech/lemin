@@ -31,6 +31,7 @@ VPATH := src
 SRC := lemin.c
 SRC += linked.c
 SRC += free.c
+SRC += move.c
 SRC += parser/parser.c
 SRC += parser/room.c
 
