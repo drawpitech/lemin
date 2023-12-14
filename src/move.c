@@ -30,6 +30,7 @@ int visit_room(room_t **shortest, size_t i, room_t *graph)
         shortest[i] = graph;
         return RET_VALID;
     }
+    graph->visited = false;
     return RET_ERROR;
 }
 
