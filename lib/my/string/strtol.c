@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** lemin
 ** File description:
-** my_strtol
+** strtol
 */
 
 #include "string.h"
