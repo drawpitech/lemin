@@ -38,9 +38,10 @@ int get_command(char *line, anthill_t *anthill)
 static
 int get_ants_num(char *line, anthill_t *anthill)
 {
-    long value = my_strtol(line, NULL);
+    const char *endptr;
+    long value = my_strtol(line, &endptr);
 
-    if (value == INT64_MAX)
+    if (endptr == line)
         return RET_ERROR;
     anthill->ants = value;
     anthill->step = ST_ROOMS;

@@ -48,7 +48,7 @@ room_t *get_room_data(char *line)
     room.x = my_strtol(ptr_x + 1, NULL);
     room.y = my_strtol(ptr_y + 1, NULL);
     room.type = ROOM_NORMAL;
-    if (room.x == INT64_MAX || room.y == INT64_MAX)
+    if (line == ptr_x || ptr_x == ptr_y)
         return NULL;
     return &room;
 }
