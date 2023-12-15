@@ -38,7 +38,7 @@ int get_command(char *line, anthill_t *anthill)
 static
 int get_ants_num(char *line, anthill_t *anthill)
 {
-    long value = str_to_int(line);
+    long value = my_strtol(line, NULL);
 
     if (value == INT64_MAX)
         return RET_ERROR;

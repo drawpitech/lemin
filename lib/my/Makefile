@@ -47,7 +47,7 @@ SRC += string/my_strpbrk.c
 SRC += string/my_strstr.c
 SRC += string/reverse.c
 SRC += string/str_identify.c
-SRC += string/str_to_int.c
+SRC += string/strtol.c
 SRC += string/strcases.c
 SRC += string/write_number.c
 
