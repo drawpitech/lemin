@@ -106,8 +106,11 @@ $(TEST_NAME): $(LIBMY) $(TEST_OBJ)
 	@ $(ECHO) "[${C_BOLD}${C_YELLOW}CC${C_RESET}] ${C_GREEN}$@${C_RESET}"
 	@ $(CC) -o $@ $(TEST_OBJ) $(CFLAGS) $(LDFLAGS) || $(DIE)
 
-tests_run: fclean $(TEST_NAME)
-	@-./$(TEST_NAME)
+ifneq ($(NO_COV), 1)
+tests_run: CFLAGS += -g3 --coverage
+endif
+tests_run: fclean $(TEST_NAME) $(NAME)
+	@-sh -c "./$(TEST_NAME) 1000 1000 1000 | ./$(NAME)"
 
 .PHONY: $(TEST_NAME) tests_run
 
