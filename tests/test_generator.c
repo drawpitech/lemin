@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** lemin
 ** File description:
-** test_generator
+** tests for generator
 */
 
 #include <stdio.h>
