@@ -38,6 +38,7 @@ SRC += parser/room.c
 # Tests files
 VPATH += tests
 TEST_SRC := $(SRC)
+TEST_SRC += test_generator.c
 
 SRC += main.c
 
