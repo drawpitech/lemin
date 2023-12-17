@@ -30,15 +30,15 @@ bool is_valid(char c, bool *negative, const char *base)
     return false;
 }
 
-long my_strtol_base(const char *str, const char **endptr, char const *base)
+long my_strtol_base(const char *str, char const *base)
 {
     long res = 0;
     long len = (long)my_strlen(base);
     bool negative = false;
     size_t i = 0;
 
-    if (str == NULL || len == 0)
-        return 0;
+    if (str == NULL || base == 0)
+        return INT64_MAX;
     for (; str[i]; i++) {
         if (!is_valid(str[i], &negative, base))
             break;
@@ -46,12 +46,12 @@ long my_strtol_base(const char *str, const char **endptr, char const *base)
             continue;
         res = res * len + -index_in(str[i], base);
     }
-    if (endptr != NULL)
-        *endptr = str + i;
+    if (str[i])
+        return INT64_MAX;
     return (negative) ? res : -res;
 }
 
-long my_strtol(const char *str, const char **endptr)
+long my_strtol(const char *str)
 {
-    return my_strtol_base(str, endptr, BASE_DEC);
+    return my_strtol_base(str, BASE_DEC);
 }

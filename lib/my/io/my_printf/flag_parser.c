@@ -54,7 +54,7 @@ void get_flags(printf_t *pr, printf_args_t *arg)
     arg->flags = (struct flags_s){ 0 };
     get_simple_flags(pr, arg);
     if (IS_NUM(pr->format[pr->index]) || pr->format[pr->index] == '-') {
-        arg->flags.padding = my_strtol(pr->format + pr->index, NULL);
+        arg->flags.padding = my_strtol(pr->format + pr->index);
         arg->flags.padded = true;
         pr->index += (
             (int)my_nbr_len_base(arg->flags.padding, BASE_DEC)
@@ -72,7 +72,7 @@ bool get_precision(printf_t *pr, printf_args_t *arg)
     arg->precision = default_precision;
     if (pr->format[pr->index] != '.')
         return true;
-    tmp = my_strtol(pr->format + pr->index + 1, NULL);
+    tmp = my_strtol(pr->format + pr->index + 1);
     if (tmp <= 0 && pr->format[pr->index + 1] == '-')
         return false;
     pr->index += 1;

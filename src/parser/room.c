@@ -45,10 +45,10 @@ room_t *get_room_data(char *line)
     *ptr_x = '\0';
     *ptr_y = '\0';
     room.name = dup;
-    room.x = my_strtol(ptr_x + 1, NULL);
-    room.y = my_strtol(ptr_y + 1, NULL);
+    room.x = my_strtol(ptr_x + 1);
+    room.y = my_strtol(ptr_y + 1);
     room.type = ROOM_NORMAL;
-    if (line == ptr_x || ptr_x == ptr_y)
+    if (room.x == INT64_MAX || room.y == INT64_MAX)
         return NULL;
     return &room;
 }
